@@ -18,9 +18,21 @@
      <button type="button" id="cb">Circle</button>
      
     </p>
-     
+
     <p id = "stats">XXX</p>
-    
+
+    <p>
+      Do something Awesome: made an FPS game (draw a point on a drawn circle every 1 second to "hit" the circle)
+      html score keeps track of how many hits you have 
+      press start game to start and show the score and end game to end the game.
+      
+     </p>
+
+    <button type="button" id="start">Start Game</button>
+    <button type="button" id="stop">End Game</button>
+    <p id = "scoreBoard">
+      <span id="scoreValue">0</span>  
+    </p>
     <p>
       Red <input type="range" min="0" max= "100" value="100" class="slider" id= "rs">
     </p>
@@ -40,6 +52,7 @@
     </p>
 
     <button type="button" id="clear">Clear</button>
+    <button id="drawPictureButton">Draw</button>
     
     <script src="../lib/webgl-utils.js"></script>
     <script src="../lib/webgl-debug.js"></script>
@@ -47,6 +60,7 @@
     <script src="Point.js"></script>
     <script src="Triangle.js"></script>
     <script src="Circle.js"></script>
+    <script src="Game.js"></script>
     <script src="ColoredPoints.js"></script>
   </body>
 </html>
