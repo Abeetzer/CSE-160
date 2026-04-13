@@ -88,6 +88,7 @@ function handleUI(){
   document.getElementById('ss').addEventListener('mouseup',  function () {g_selectedsize = this.value;});
   document.getElementById('se').addEventListener('mouseup',  function () {g_selectedseg = this.value;});
   document.getElementById('clear').onclick = function () {g_shapesList = []; renderAllShapes();};
+  document.getElementById('drawPictureButton').onclick = drawMyPicture;
 }
 function main() {
   setupWebGL();
@@ -158,4 +159,66 @@ function click(ev) {
   
   renderAllShapes();
 }
+
+function drawMyPicture() {
+  //bodies
+  gl.uniform4f(u_FragColor, 0.88, 0.88, 0.88, 1.0); 
   
+  // queen
+  drawTriangle([-0.75, -0.4, -0.25, -0.4, -0.65, -0.2]);
+  drawTriangle([-0.25, -0.4, -0.35, -0.2, -0.65, -0.2]);
+  drawTriangle([-0.6, -0.2, -0.4, -0.2, -0.575, 0.1]);
+  drawTriangle([-0.4, -0.2, -0.425, 0.1, -0.575, 0.1]);
+  drawTriangle([-0.65, 0.1, -0.35, 0.1, -0.5, 0.025]);
+  drawTriangle([-0.65, 0.1, -0.35, 0.1, -0.575, 0.175]);
+  drawTriangle([-0.35, 0.1, -0.425, 0.175, -0.575, 0.175]);
+  
+  // king
+  drawTriangle([0.3, -0.4, 0.7, -0.4, 0.3, -0.2]);
+  drawTriangle([0.7, -0.4, 0.3, -0.2, 0.7, -0.2]);
+  drawTriangle([0.35, -0.2, 0.65, -0.2, 0.45, 0.0]);
+  drawTriangle([0.65, -0.2, 0.45, 0.0, 0.55, 0.0]);
+  drawTriangle([0.45, 0.0, 0.55, 0.0, 0.35, 0.15]);
+  drawTriangle([0.55, 0.0, 0.35, 0.15, 0.65, 0.15]);
+  drawTriangle([0.35, 0.15, 0.65, 0.15, 0.25, 0.2]);
+  drawTriangle([0.65, 0.15, 0.25, 0.2, 0.75, 0.2]);
+  drawTriangle([0.25, 0.2, 0.75, 0.2, 0.4, 0.25]);
+  drawTriangle([0.75, 0.2, 0.4, 0.25, 0.6, 0.25]);
+  drawTriangle([0.35, 0.35, 0.65, 0.35, 0.5, 0.25]);
+  drawTriangle([0.35, 0.35, 0.5, 0.35, 0.4, 0.45]);
+  drawTriangle([0.65, 0.35, 0.5, 0.35, 0.6, 0.45]);
+
+
+  // initials
+  gl.uniform4f(u_FragColor, 0.86, 0.08, 0.24, 1.0); 
+  
+  // A
+  drawTriangle([-0.6, -0.375, -0.55, -0.375, -0.5, -0.225]);
+  drawTriangle([-0.4, -0.375, -0.45, -0.375, -0.5, -0.225]);
+  drawTriangle([-0.54, -0.3, -0.46, -0.3, -0.53, -0.275]);
+  drawTriangle([-0.46, -0.3, -0.47, -0.275, -0.53, -0.275]);
+  drawTriangle([-0.525, 0.225, -0.475, 0.225, -0.5, 0.275]); // Crown Cutout
+
+  // V
+  drawTriangle([0.38, -0.25, 0.44, -0.25, 0.5, -0.36]);
+  drawTriangle([0.62, -0.25, 0.56, -0.25, 0.5, -0.36]);
+
+  // accessroeis
+  gl.uniform4f(u_FragColor, 1.0, 0.84, 0.0, 1.0); 
+  
+  // crown
+  drawTriangle([-0.575, 0.175, -0.55, 0.25, -0.625, 0.325]);
+  drawTriangle([-0.55, 0.25, -0.45, 0.25, -0.5, 0.375]);
+  drawTriangle([-0.425, 0.175, -0.45, 0.25, -0.375, 0.325]);
+  drawTriangle([-0.575, 0.175, -0.5, 0.175, -0.55, 0.25]);
+  drawTriangle([-0.425, 0.175, -0.5, 0.175, -0.45, 0.25]);
+  drawTriangle([-0.55, 0.25, -0.45, 0.25, -0.5, 0.175]);
+  drawTriangle([-0.54, 0.43, -0.46, 0.43, -0.5, 0.48]);
+  drawTriangle([-0.54, 0.43, -0.46, 0.43, -0.5, 0.39]);
+
+  // cross
+  drawTriangle([0.48, 0.48, 0.52, 0.48, 0.48, 0.62]);
+  drawTriangle([0.52, 0.48, 0.48, 0.62, 0.52, 0.62]);
+  drawTriangle([0.42, 0.53, 0.58, 0.53, 0.42, 0.57]);
+  drawTriangle([0.58, 0.53, 0.42, 0.57, 0.58, 0.57]);
+}
