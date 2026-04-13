@@ -72,7 +72,7 @@ let g_selectedcolor = [1.0, 1.0, 1.0, 1.0];
 let g_selectedsize = 5;
 let g_selectedtype = POINT;
 let g_selectedseg = 1;
-
+let myGame = new Game();
 function handleUI(){
   document.getElementById('red').onclick = function () {g_selectedcolor = [1.0, 0.0, 0.0, 1.0];};
   document.getElementById('green').onclick = function () {g_selectedcolor = [0.0, 1.0, 0.0, 1.0];};
@@ -89,6 +89,17 @@ function handleUI(){
   document.getElementById('se').addEventListener('mouseup',  function () {g_selectedseg = this.value;});
   document.getElementById('clear').onclick = function () {g_shapesList = []; renderAllShapes();};
   document.getElementById('drawPictureButton').onclick = drawMyPicture;
+
+  document.getElementById('start').onclick = function() {
+    g_shapesList = [];
+    myGame.start();
+    renderAllShapes();
+  };
+ document.getElementById('stop').onclick = function() {
+    g_shapesList = [];
+    myGame.stop();
+    renderAllShapes();
+ };
 }
 function main() {
   setupWebGL();
@@ -128,6 +139,7 @@ function renderAllShapes() {
   for(var i = 0; i < len; i++) {
     g_shapesList[i].render();
   }
+  myGame.renderTargets();
   var dur = performance.now() - start_time;
   sendTextToHTML("numdot: " + len + "ms: " + Math.floor(dur) + "fps: " + Math.floor(10000/dur), "stats");
 }
@@ -140,6 +152,11 @@ function sendTextToHTML(text, htmlid){
 function click(ev) {
   [x,y] = handleClicks(ev);
 
+  if (myGame.isActive){
+    let hit = myGame.checkHit(x, y);
+    if (hit) {renderAllShapes(); return;}
+  }
+  
   let point;
   if(g_selectedtype == POINT){point = new Point();}
   else if(g_selectedtype == TRIANGLE){
