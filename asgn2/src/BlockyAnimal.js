@@ -356,8 +356,8 @@ var eyepos = [[0.4, 0.15], [0.2, 0.15]];
       let tearDropY = (timeElapsed * 1.5) % 0.5; 
 
       var tearPositions = [
-        [0.2, 0.05 - tearDropY, -0.65],
-        [-0.2, 0.05 - tearDropY, -0.65]
+        [0.4, 0.05 - tearDropY, -0.4],
+        [0.2, 0.05 - tearDropY, -0.4]
       ];
 
       for (var i = 0; i < tearPositions.length; i++) {
