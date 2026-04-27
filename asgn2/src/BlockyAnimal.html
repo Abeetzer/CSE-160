@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Change a point color</title>
+  </head>
+
+  <body onload="main()">
+    <canvas id="webgl" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+
+    <button type="button" id="green">Green</button>
+    <button type="button" id="red">Red</button>
+    <p>
+     <button type="button" id="pb">Point</button>
+     <button type="button" id="tb">Triangle</button>
+     <button type="button" id="cb">Circle</button>
+     
+    </p>
+
+    <p id = "stats">XXX</p>
+
+    <p>
+      Do something Awesome: made an FPS game (draw a point on a drawn circle every 1 second to "hit" the circle)
+      html score keeps track of how many hits you have 
+      press start game to start and show the score and end game to end the game.
+      
+     </p>
+
+    <button type="button" id="start">Start Game</button>
+    <button type="button" id="stop">End Game</button>
+    <p id = "scoreBoard">
+      <span id="scoreValue">0</span>  
+    </p>
+
+    <p>
+      Camera Angle <input type="range" min="0" max= "90" value="5" class="slider" id= "ga">  
+    </p>
+    <button type="button" id="walkon">Walk ON</button>
+    <button type="button" id="walkoff">Walk OFF </button>
+    <p>
+      Yellow Angle <input type="range" min="0" max= "90" value="5" class="slider" id= "ya">  
+    </p>
+    <button type="button" id="yon">Anim On</button>
+    <button type="button" id="yoff">Anim Off</button>
+    <p>
+      pink Angle <input type="range" min="0" max= "90" value="5" class="slider" id= "pa">  
+    </p>
+
+    <button type="button" id="pon">Anim On</button>
+    <button type="button" id="poff">Anim Off</button>
+    <p>
+      Eye Angle <input type="range" min="0" max= "90" value="5" class="slider" id= "ey">  
+    </p>
+    <button type="button" id="eon">Anim On</button>
+    <button type="button" id="eoff">Anim Off</button>
+    <p>
+      Red <input type="range" min="0" max= "100" value="100" class="slider" id= "rs">
+    </p>
+    <p>
+      Green <input type="range" min="0" max= "100" value="100" class="slider" id= "gs">    
+    </p>
+    <p>
+      Blue <input type="range" min="0" max= "100" value="100" class="slider" id= "bs">  
+    </p>
+
+    <p>
+      Size <input type="range" min="0" max= "100" value="0" class="slider" id= "ss">  
+    </p>
+
+    <p>
+      Segment <input type="range" min="3" max= "100" value="0" class="slider" id= "se">  
+    </p>
+
+
+
+
+    <button type="button" id="clear">Clear</button>
+    <button id="drawPictureButton">Draw</button>
+    
+    <script src="../lib/webgl-utils.js"></script>
+    <script src="../lib/webgl-debug.js"></script>
+    <script src="../lib/cuon-utils.js"></script>
+    <script src="../lib/cuon-matrix.js"></script>    
+    <script src="Triangle.js"></script>
+    <script src="Cube.js"></script>
+    <script src="Cylinder.js"></script>
+    <script src="Circle.js"></script>
+    <script src="Point.js"></script>
+    <script src="Game.js"></script>
+    <script src="BlockyAnimal.js"></script>
+  </body>
+</html>
