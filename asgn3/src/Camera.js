@@ -87,61 +87,22 @@ applyMovement(moveX, moveZ) {
     this.applyMovement(s.elements[0], s.elements[2]);
   }
 
-  /*
-    moveBackwards(){
-      let b = new Vector3();
-      b.set(this.eye);
-      b.sub(this.at);
-      b.normalize();
-      b.mul(this.speed);
-      this.eye.add(b);
-      this.at.add(b);
-    }
-
-    moveLeft(){
-      let f = new Vector3();
-      f.set(this.at);
-      f.sub(this.eye);
-      let s = Vector3.cross(this.up, f);
-      s.normalize();
-      s.mul(this.speed);
-      this.eye.add(s);
-      this.at.add(s);
-    }
-
-    moveRight(){
-      let f = new Vector3();
-      f.set(this.at);
-      f.sub(this.eye);
-      let s = Vector3.cross(f, this.up);
-      s.normalize();
-      s.mul(this.speed);
-      this.eye.add(s);
-      this.at.add(s);
-    }
-*/
     panLeft(alpha){
-      // 1. Compute forward vector f = at - eye
+
       let f = new Vector3();
       f.set(this.at);
       f.sub(this.eye);
 
-      // 2. Convert to polar coordinates (on the XZ plane)
-      // r = radius (distance from at), theta = current angle
       let r = Math.sqrt(f.elements[0]*f.elements[0] + f.elements[2]*f.elements[2]);
       let theta = Math.atan2(f.elements[2], f.elements[0]);
 
-      // 3. Change theta by the desired amount 
-      // (We convert alpha from degrees to radians because Math.sin/cos expect radians)
       let rad = alpha * (Math.PI / 180);
       theta -= rad; // Subtracting turns the camera left
 
-      // 4. Change back to Cartesian coordinates
+ 
       f.elements[0] = r * Math.cos(theta);
       f.elements[2] = r * Math.sin(theta);
-      // Note: f.elements[1] (the Y value) stays the exact same!
 
-      // 5. Update the "at" vector: at = eye + f_prime
       this.at.set(this.eye);
       this.at.add(f);
     }
@@ -154,9 +115,8 @@ applyMovement(moveX, moveZ) {
       let r = Math.sqrt(f.elements[0]*f.elements[0] + f.elements[2]*f.elements[2]);
       let theta = Math.atan2(f.elements[2], f.elements[0]);
 
-      // Convert degrees to radians
       let rad = alpha * (Math.PI / 180);
-      theta += rad; // Adding turns the camera right
+      theta += rad; 
 
       f.elements[0] = r * Math.cos(theta);
       f.elements[2] = r * Math.sin(theta);
@@ -167,24 +127,20 @@ applyMovement(moveX, moveZ) {
   }
 
   panUp(alpha) {
-      // 1. Calculate the forward vector
+
       let f = new Vector3();
       f.set(this.at);
       f.sub(this.eye);
 
-      // 2. Find the "Right" vector (the axis we want to tilt around)
-      // Cross product of Forward and Up gives us Right
+
       let right = Vector3.cross(f, this.up);
       right.normalize();
 
-      // 3. Create a rotation matrix around that Right vector
       let rotMat = new Matrix4();
       rotMat.setRotate(alpha, right.elements[0], right.elements[1], right.elements[2]);
 
-      // 4. Apply the rotation to our forward vector
       let f_prime = rotMat.multiplyVector3(f);
 
-      // 5. Update the 'at' point
       this.at.set(this.eye);
       this.at.add(f_prime);
     }

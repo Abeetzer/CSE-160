@@ -202,7 +202,6 @@ function main() {
     if (g_gameOver) return;
     if (document.pointerLockElement === canvas || document.mozPointerLockElement === canvas) {
       
-      // Grab both X and Y movements
       let deltaX = ev.movementX;
       let deltaY = ev.movementY; 
 
@@ -210,11 +209,8 @@ function main() {
       let alphaX = deltaX * sensitivity;
       let alphaY = deltaY * sensitivity; // Calculate pitch angle
 
-      // Turn the camera left/right
       g_camera.panRight(alphaX); 
       
-      // Tilt the camera up/down
-      // (Depending on how your brain works, you might need to make this -alphaY to invert the Y-axis!)
       g_camera.panUp(-alphaY); 
       
       renderAllShapes();
@@ -309,7 +305,7 @@ function initTextures() {
     return false;
   }
   image0.onload = function(){ loadTexture0(image0); };
-  image0.src = '../textures/marble.jpg';// add cyan for interpolation
+  image0.src = '../textures/marble.jpg';
 
   var image1 = new Image(); 
   if (!image1) {
@@ -398,24 +394,24 @@ function loadTexture2(image) {
 
 function loadTexture3(image) {
   
-  var texture = gl.createTexture();   // Create a texture object
+  var texture = gl.createTexture();
   if (!texture) {
     console.log('Failed to create the texture object');
     return false;
   }
   
-  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
-  // Enable texture unit0
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); 
+
   gl.activeTexture(gl.TEXTURE3);
-  // Bind the texture object to the target
+
   gl.bindTexture(gl.TEXTURE_2D, texture);
 
-  // Set the texture parameters
+
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-  // Set the texture image
+  
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
   
-  // Set the texture unit 0 to the sampler
+
   gl.uniform1i(u_Sampler3, 3);
 }
 
@@ -516,12 +512,11 @@ function drawEnemies() {
 function renderAllShapes() {
   var start_time = performance.now();
   
-  // Pass the projection matrix
+
   var projMat=new Matrix4();
   projMat.setPerspective (50, 1*canvas.width/canvas.height, 0.1, 100);
   gl.uniformMatrix4fv(u_ProjectionMatrix, false, projMat.elements);
 
-// Pass the view matrix dynamically from the live camera
   var viewMat=new Matrix4();
   viewMat.setLookAt(
     g_camera.eye.elements[0], g_camera.eye.elements[1], g_camera.eye.elements[2],
@@ -544,12 +539,12 @@ function renderAllShapes() {
   gl.clear(gl.COLOR_BUFFER_BIT);
 
     
-  // Draw Map  
+
   drawMap();
   drawCustomBlocks();
   drawEnemies();
 
-  // Draw the floor
+
   var body = new Cube();
   body.color = [0.0,1.0,0.2,1.0];
   body.textureNum=-2;
@@ -577,13 +572,11 @@ function renderAllShapes() {
 
   var duration = performance.now() - start_time;
   
-  // Prevent divide-by-zero errors if duration is 0
   var fps = 0;
   if (duration !== 0) {
     fps = 10000 / duration; 
   }
   
-  // Send the result to the <p id="stats"> tag in your HTML
   sendTextToHTML("ms: " + Math.floor(duration) + " fps: " + Math.floor(fps), "stats");
   updateCrosshair();
 }
@@ -619,13 +612,12 @@ function keydown(ev) {
 //ENTITY BUILDING CONTROLS (F to build, G to destroy)
   else if (ev.key === 'f' || ev.key === 'F' || ev.key === 'g' || ev.key === 'G') {
     
-    // Calculate the Forward vector
+
     let f = new Vector3();
     f.set(g_camera.at);
     f.sub(g_camera.eye);
     f.normalize(); 
 
-    // Project a target point in 3D space (this is your "cursor")
     let reach = 2.0; 
     let targetX = g_camera.eye.elements[0] + (f.elements[0] * reach);
     let targetY = g_camera.eye.elements[1] + (f.elements[1] * reach); // We use actual Y now!
@@ -640,12 +632,11 @@ function keydown(ev) {
     else if (ev.key === 'g' || ev.key === 'G') {
       // Find the closest box to our "cursor"
       let closestIndex = -1;
-      let closestDist = 999; // Start with a huge dummy number
+      let closestDist = 999; 
 
       for (let i = 0; i < g_customBlocks.length; i++) {
         let b = g_customBlocks[i];
         
-        // Basic 3D distance math (Pythagorean theorem)
         let dx = b.x - targetX;
         let dy = b.y - targetY;
         let dz = b.z - targetZ;
@@ -658,14 +649,11 @@ function keydown(ev) {
         }
       }
 
-      // If we found a box under our cursor, delete it from the list!
       if (closestIndex !== -1) {
         g_customBlocks.splice(closestIndex, 1);
       }
     }
   }
-
-  // redraw scene to show new camera pos
   renderAllShapes();
 }
 
@@ -679,10 +667,10 @@ function drawCustomBlocks() {
     let pos = g_customBlocks[i]; // Get the saved X, Y, Z
     
     box.matrix.setIdentity();
-    // Move the box to where the user clicked!
+
     box.matrix.translate(pos.x, pos.y, pos.z); 
     
-    // Apply your custom tilt and scale
+
     box.matrix.rotate(-5, 1, 0, 0);
     box.matrix.scale(0.5, 0.3, 0.5);
     
@@ -694,19 +682,18 @@ function updateCrosshair() {
   let crosshair = document.getElementById('crosshair');
   if (!crosshair) return;
 
-  // 1. Figure out exactly where the camera is looking
   let f = new Vector3();
   f.set(g_camera.at);
   f.sub(g_camera.eye);
   f.normalize(); 
 
-  // Use the exact same reach distance you used in your keydown function!
+
   let reach = 2.0; 
   let targetX = g_camera.eye.elements[0] + (f.elements[0] * reach);
   let targetY = g_camera.eye.elements[1] + (f.elements[1] * reach);
   let targetZ = g_camera.eye.elements[2] + (f.elements[2] * reach); 
 
-  // 2. Check if there is a block at that target spot
+
   let hoveringOverBlock = false;
   for (let i = 0; i < g_customBlocks.length; i++) {
     let b = g_customBlocks[i];
@@ -715,7 +702,7 @@ function updateCrosshair() {
     let dz = b.z - targetZ;
     let dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
 
-    // If a block is within 0.8 units of our cursor, we are targeting it!
+   
     if (dist < 0.8) { 
       hoveringOverBlock = true;
       break; 
@@ -724,8 +711,8 @@ function updateCrosshair() {
 
   // 3. Update the UI colors
   if (hoveringOverBlock) {
-    crosshair.style.color = "red";   // Red means destroy
+    crosshair.style.color = "red";
   } else {
-    crosshair.style.color = "white"; // White means build
+    crosshair.style.color = "white"; 
   }
 }
