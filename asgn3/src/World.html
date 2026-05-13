@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Change a point color</title>
+  </head>
+
+  <body onload="main()">
+  <div style="position: relative; width: fit-content;">
+  
+    <canvas id="webgl" width="400" height="400"></canvas>
+    <div id="crosshair" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold; font-size: 24px; pointer-events: none; text-shadow: 1px 1px 2px black;">
+      +
+    </div>
+    <div id="gameOverScreen" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: red; font-weight: bold; font-size: 64px; font-family: sans-serif; pointer-events: none; text-shadow: 4px 4px 0px black;">
+      GAME OVER
+    </div>
+  </div>
+
+      
+    <p id = "stats">XXX</p>
+    <p>
+      - the game is tag if enemy collides with player -- they die but placing blocks down with f kills enemy
+      <p></p>
+      - can remove blocks using g to create space for player to move around 
+      <p></p>
+      - walls are interpolated with cyan and I get 4000fps on my end for perf
+      <p></p>
+      - press crtl + r to restart game. enjoy !!
+    </p>
+
+    <p>
+      Camera Angle <input type="range" min="0" max= "90" value="5" class="slider" id= "ga">  
+    </p>
+    <p>
+      Yellow Angle <input type="range" min="0" max= "90" value="5" class="slider" id= "ya">  
+    </p>
+    <button type="button" id="yon">Anim On</button>
+    <button type="button" id="yoff">Anim Off</button>
+    <p>
+      pink Angle <input type="range" min="0" max= "90" value="5" class="slider" id= "pa">  
+    </p>
+
+    <button type="button" id="pon">Anim On</button>
+    <button type="button" id="poff">Anim Off</button>
+    <p>
+      Eye Angle <input type="range" min="0" max= "90" value="5" class="slider" id= "ey">  
+    </p>
+    <button type="button" id="eon">Anim On</button>
+    <button type="button" id="eoff">Anim Off</button>
+    
+    <script src="../lib/webgl-utils.js"></script>
+    <script src="../lib/webgl-debug.js"></script>
+    <script src="../lib/cuon-utils.js"></script>
+    <script src="../lib/cuon-matrix.js"></script>    
+    <script src="Triangle.js"></script>
+    <script src="Cube.js"></script>
+    <script src="Circle.js"></script>
+    <script src="Camera.js"></script>
+    <script src="Point.js"></script>
+    <script src="World.js"></script>
+  </body>
+</html>
